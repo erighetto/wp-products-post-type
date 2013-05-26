@@ -125,7 +125,7 @@ plugins_url( 'images/image.png', __FILE__ ),
     	)
     );
   	// now let's add custom tags (these act like categories)
-    register_taxonomy( 'color', 
+    register_taxonomy( 'cup', 
     	array('products'), /* if you change the name of register_post_type( 'product', then you have to change this */
     	array('hierarchical' => false,    /* if this is false, it acts like tags */                
     		'labels' => array(
