@@ -78,7 +78,7 @@ plugins_url( 'images/image.png', __FILE__ ),
     		'show_admin_column' => true, 
     		'show_ui' => true,
     		'query_var' => true,
-    		'rewrite' => array( 'slug' => 'custom-slug' ),
+    		'show_in_menu' => true, 
     	)
     );   
     
@@ -101,6 +101,7 @@ plugins_url( 'images/image.png', __FILE__ ),
     		'show_admin_column' => true,
     		'show_ui' => true,
     		'query_var' => true,
+    		'show_in_menu' => false, 
     	)
     ); 
   	// now let's add custom tags (these act like categories)
@@ -122,6 +123,7 @@ plugins_url( 'images/image.png', __FILE__ ),
     		'show_admin_column' => true,
     		'show_ui' => true,
     		'query_var' => true,
+    		'show_in_menu' => false, 
     	)
     );
   	// now let's add custom tags (these act like categories)
@@ -143,6 +145,7 @@ plugins_url( 'images/image.png', __FILE__ ),
     		'show_admin_column' => true,
     		'show_ui' => true,
     		'query_var' => true,
+    		'show_in_menu' => false, 
     	)
     );     
 }
@@ -168,9 +171,9 @@ function display_product_meta_box( $product ) {
 $SKU =
 esc_html( get_post_meta( $product->ID,
 'SKU', true ) );
-$SKU =
+$position =
 intval( get_post_meta( $product->ID,
-'SKU', true ) );
+'position', true ) );
 ?>
 <table>
 <tr>
@@ -178,6 +181,12 @@ intval( get_post_meta( $product->ID,
 <td><input type="text" size="80"
 name="product_SKU"
 value="<?php echo $SKU; ?>" /></td>
+</tr>
+<tr>
+<td style="width: 100%">Posizione nell'elenco della collezione</td>
+<td><input type="text" size="80"
+name="product_position"
+value="<?php echo $position; ?>" /></td>
 </tr>
 </table>
 <?php }
@@ -199,6 +208,12 @@ if ( isset( $_POST['product_SKU'] ) &&
 $_POST['product_SKU'] != '' ) {
 update_post_meta( $product_id, 'SKU',
 $_POST['product_SKU'] );
+}
+
+if ( isset( $_POST['product_position'] ) &&
+$_POST['product_position'] != '' ) {
+update_post_meta( $product_id, 'position',
+$_POST['product_position'] );
 }
 }
 }
@@ -327,4 +342,16 @@ function product_image_attachment_show_column($name) {
     }
 }
 add_action('manage_media_custom_column', 'product_image_attachment_show_column', null, 2);
+
+## add a custom body class
+add_action( 'body_class', 'product_add_my_bodyclass');
+function product_add_my_bodyclass( $classes ) {
+  global $post;
+  $custom_taxonomy = get_the_terms( $post->ID, 'collection');
+  if ( $custom_taxonomy  && ! is_wp_error( $custom_taxonomy  ) ) {
+  current ($custom_taxonomy );
+  $classes[] = sanitize_title_with_dashes(strtolower($custom_taxonomy[key($custom_taxonomy)]->name));
+}
+  return $classes;
+}
 ?>
