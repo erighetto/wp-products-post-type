@@ -25,7 +25,7 @@ License:
   
 */
 
-
+/* This plugin has a dependency: Advanced Custom Fields */
 include_once(WP_PLUGIN_DIR .'/advanced-custom-fields/acf.php');
 
 /*
@@ -48,7 +48,7 @@ function create_product() {
 			'search_items' => 'Cerca tra i Prodotti',
 			'not_found' => 'Nessun Prodotto trovato',
 			'not_found_in_trash' => 'Nessun Prodotto trovato nel cestino',
-			'parent' => 'Parent Product'
+			'parent' => 'Prodotto padre'
 		) ,
 		'public' => true,
 		'menu_position' => 15,
