@@ -64,6 +64,30 @@ function create_product() {
 		'has_archive' => true
 	));
 
+	// now let's add custom categories (these act like categories)
+    register_taxonomy( 'typology', 
+    	array('products'), /* if you change the name of register_post_type( 'product', then you have to change this */
+    	array('hierarchical' => true,     /* if this is true, it acts like categories */             
+    		'labels' => array(
+    			'name' => 'Tipologia', /* name of the custom taxonomy */
+    			'singular_name' => 'Tipologia', /* single taxonomy name */
+    			'search_items' =>  'Cerca Tipologia', /* search title for taxomony */
+    			'all_items' => 'Tutti le tipilogie', /* all title for taxonomies */
+    			'parent_item' => 'Tipologia Padre', /* parent title for taxonomy */
+    			'parent_item_colon' => 'Tipologia Padre:', /* parent taxonomy title */
+    			'edit_item' => 'Modifica Tipologia', /* edit custom taxonomy title */
+    			'update_item' => 'Aggiorna Tipologia', /* update title for taxonomy */
+    			'add_new_item' => 'Aggiungi nuova Tipologia', /* add new title for taxonomy */
+    			'new_item_name' => 'Nuova Tipologia', /* name title for taxonomy */
+				'not_found' => 'Nessuna Tipologia trovata',
+    		),
+    		'show_admin_column' => true, 
+    		'show_ui' => true,
+    		'query_var' => true,
+    		'show_in_menu' => true, 
+    	)
+    );
+
 if(function_exists("register_field_group")) {
 	register_field_group(array (
 		'id' => 'acf_caratteristiche-prodotto',
